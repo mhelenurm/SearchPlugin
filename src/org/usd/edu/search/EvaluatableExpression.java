@@ -56,6 +56,9 @@ public class EvaluatableExpression extends SearchItem {
         _compare = CompareOp.CONTAINS;
         _annoType = "";
         _annoVal = annoval;
+        if(_annoVal.charAt(0) == '"' && _annoVal.charAt(_annoVal.length()-1) == '"') {
+            _annoVal = _annoVal.substring(1, _annoVal.length()-1);
+        }
     }
     public EvaluatableExpression(String annotype, String comparison, String annoval) {
         _compare = CompareOp.CONTAINS;
