@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.protege.editor.owl.model.hierarchy.AssertedClassHierarchyProvider;
 import org.protege.editor.owl.ui.tree.OWLModelManagerTree;
 import org.protege.editor.owl.ui.tree.OWLObjectTree;
@@ -35,13 +35,14 @@ import org.protege.editor.core.ui.util.Icons;
 public class SearchComponent extends AbstractOWLViewComponent {
     private static final long serialVersionUID = -4515710047558710080L;
     
-    private static final Logger log = Logger.getLogger(SearchComponent.class);
+    //private static final Logger log = Logger.getLogger(SearchComponent.class);
     
     private JTextField _searchInputField;
     private JScrollPane _searchResultPanel;
     private JRadioButton _previousSearch;
     private JPanel _resultPanel;
     private JButton _searchButton;
+    private JLabel _resultCountLabel;
     
     private JButton _readmebutton;
     private JLabel helpLabel;
@@ -76,8 +77,14 @@ public class SearchComponent extends AbstractOWLViewComponent {
                 
             }
         });
+        
+        
         _searchInputField.setSize(300, 30);
         add(_searchInputField);
+        
+        _resultCountLabel = new JLabel("Showing 0 results out of 0");
+        _resultCountLabel.setSize(200, 30);
+        add(_resultCountLabel);
         
         _previousSearch = new JRadioButton();
         _previousSearch.setLocation(0, 0);
@@ -135,6 +142,7 @@ public class SearchComponent extends AbstractOWLViewComponent {
             public void componentMoved(ComponentEvent e) {}
             
             public void componentResized(ComponentEvent e) {
+                _resultCountLabel.setLocation(getWidth()/2-100, 0);
                 _searchResultPanel.setSize(getWidth()-10, getHeight()-65);
                 _searchInputField.setSize(getWidth()-110, 30);
                 _searchButton.setLocation(getWidth()-80, 30);
@@ -145,7 +153,7 @@ public class SearchComponent extends AbstractOWLViewComponent {
             }
         });
         
-        log.info("Search Component initialized");
+        //log.info("Search Component initialized");
     }
     
     public String trimIRI(String iri) { //basically goes back to the last ':', '/', or '#' in the string and cuts it off from there
@@ -164,6 +172,7 @@ public class SearchComponent extends AbstractOWLViewComponent {
     {
         ArrayList<OWLClass> thissearch = new ArrayList<OWLClass>();
         int result = 0;
+        int resultt = 0;
         _resultPanel.removeAll();
         
         String searchText = _searchInputField.getText();
@@ -209,19 +218,22 @@ public class SearchComponent extends AbstractOWLViewComponent {
                     name = lit;
                 }
             }
-            if(tree.evaluate() && result<=20) { //YES YES YES YES
-                thissearch.add(cls);
-                SearchResult resultdisplay = new SearchResult(name, "" + cls, getWidth()-40, 70);
-                resultdisplay.setLocation(5, 5 + result*75);
-                _resultPanel.add(resultdisplay);
-                _resultPanel.setPreferredSize(new Dimension(getWidth(), 80 + result*75));
-                _resultPanel.repaint();
-                _searchResultPanel.repaint();
-                result++;
-                
+            if(tree.evaluate()) { //YES YES YES YES
+                if(result<20) {
+                    thissearch.add(cls);
+                    SearchResult resultdisplay = new SearchResult(name, "" + cls, getWidth()-40, 70);
+                    resultdisplay.setLocation(5, 5 + result*75);
+                    _resultPanel.add(resultdisplay);
+                    _resultPanel.setPreferredSize(new Dimension(getWidth(), 80 + result*75));
+                    _resultPanel.repaint();
+                    _searchResultPanel.repaint();
+                    result++;
+                }
+                resultt++;
             }
             tree.clear();
         }
+        _resultCountLabel.setText("Showing " + result + " results out of " + resultt);
         _previousResults = thissearch;
         _searchResultPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         _searchResultPanel.repaint();

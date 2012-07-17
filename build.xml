@@ -163,6 +163,9 @@
      <jar jarfile = "${build}/${plugin}.jar"
           basedir = "${classes}" 
           manifest = "${build}/manifest.mf"/>
+          
+    <jar jarfile = "${plugin}.jar" basedir = "${classes}" manifest = "${build}/manifest.mf"/>
+
    </target>
 
    <target name = "install" depends = "jar">
