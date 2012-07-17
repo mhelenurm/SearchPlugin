@@ -50,8 +50,6 @@
                value="${major.version}.${minor.version}.${micro.version}.${build.time}"/>
      <mkdir dir = "${build}"/>
      <mkdir dir = "${classes}"/>
-     <mkdir dir = "${classes}/lib"/>
-     <mkdir dir = "${genlib}"/>
      <condition property="use.bundlor">
        <and>
          <available file="${bundlor.home}"     type = "dir"/>

@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Search Plugin
+Bundle-Name: Advanced Annotation Search Plugin
 Bundle-SymbolicName: org.usd.edu.search;singleton:=true
 Bundle-Category: protege
 Bundle-Description: Advanced Annotation Search Component
-Bundle-Vendor: Mark Helenurm (USD)
+Bundle-Vendor: Mark Helenurm (Phenoscape Project)
 Bundle-DocURL: none
 Import-Package: org.osgi.framework,
  org.apache.log4j,
