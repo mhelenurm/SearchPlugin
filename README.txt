@@ -1,13 +1,16 @@
-mfkdsaPURPOSE:
+PURPOSE:
 
 The Advanced Annotation Search plugin allows user to perform logical search operations on large ontologies to find the entities they need based on existing annotation information.
 
 EXAMPLES:
 
 #1
-If you know the comment of the entity you want to find contains the string "I like puppies", you can use the query (minus the outer quotations): "comment contains "i like puppies""
+If you know some annotation contains a word or phrase, put that word or phrase in quotes ("") and click search.
 
 #2
+If you know the comment of the entity you want to find contains the string "I like puppies", you can use the query (minus the outer quotations): "comment contains "i like puppies""
+
+#3
 If you know the entity has an "age" annotation and you know the age of the entity is greater than 3 but less than 9, you can type: "age > 3 and age < 9"
 
 SYNTAX:
