@@ -104,7 +104,7 @@ public class SearchComponent extends AbstractOWLViewComponent {
             }
         });
         
-        helpLabel = new JLabel("Help ");
+        helpLabel = new JLabel("Help");
         helpLabel.setLocation(330, 0);
         helpLabel.setSize(50, 30);
         add(helpLabel);

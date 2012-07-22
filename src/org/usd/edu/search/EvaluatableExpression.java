@@ -9,17 +9,6 @@ package org.usd.edu.search;
  */
 
 public class EvaluatableExpression extends SearchItem {
-    enum CompareOp {
-        CONTAINS,
-        NOTCONTAINS,
-        EQUALS,
-        NOTEQUALS,
-        GREATERTHAN,
-        GEQUAL,
-        LESSTHAN,
-        LEQUAL,
-        UNDEFINED
-    }
     
     private boolean _value;
     private String _annoType, _annoVal;

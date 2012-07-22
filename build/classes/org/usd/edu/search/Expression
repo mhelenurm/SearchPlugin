@@ -1,0 +1,8 @@
+//package org.usd.edu.search;
+
+//import org.semanticweb.owlapi.model.IRI;
+
+public class Expression extends BaseExp {
+	private IRI _iri;
+	
+}
