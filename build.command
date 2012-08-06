@@ -1,4 +1,4 @@
 cd `dirname $0`
-export PROTEGE_HOME=/Users/mhelenurm/Desktop/Protege_4.2
+export PROTEGE_HOME=/Users/mhelenurm/Documents/Work/Protege_4.2
 
 ant install

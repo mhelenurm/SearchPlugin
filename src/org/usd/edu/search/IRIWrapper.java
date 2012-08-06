@@ -19,6 +19,8 @@ public class IRIWrapper {
 	 Acts as a rendering agent
 	 */
 	public String toString() {
+		if(_label == null && _iri==null)
+			return "anything";
 		if(_label!=null)
 			return "[" + _label+ "] " +_iri;
 		else

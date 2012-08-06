@@ -16,7 +16,7 @@ Import-Package: org.osgi.framework,org.apache.log4j,javax.swing,javax.
  avax.swing.text.rtf,javax.swing.tree,javax.swing.undo,org.w3c.dom,org
  .w3c.dom.bootstrap,org.w3c.dom.events,org.w3c.dom.ls,org.xml.sax,org.
  xml.sax.ext,org.xml.sax.helpers,javax.xml.parsers
-Bundle-Version: 1.0.0.2012_07_22_1041
+Bundle-Version: 1.0.0.2012_08_06_1229
 Bundle-Activator: org.protege.editor.core.plugin.DefaultPluginActivato
  r 
 Require-Bundle: org.eclipse.equinox.registry,org.eclipse.equinox.commo

@@ -9,7 +9,7 @@ public class Operator {
 	public static final int GEQUALTO	= 5;
 	public static final int LESSTHAN	= 6;
 	public static final int LEQUALTO	= 7;
-	private static final String _names[] = {"contains", "doesn't contain", "equals", "doesn't equal", "is greater than", "is greater than or equal to", "is less than", "is less than or equal to"};
+	private static final String _names[] = {"contains", "doesn't contain", "equal", "not equal", ">", ">=", "<", "<="};
 	private static final Operator[] _ops = {new Operator(0), new Operator(1), new Operator(2), new Operator(3), new Operator(4), new Operator(5), new Operator(6), new Operator(7)};
 
 	private int _operator;

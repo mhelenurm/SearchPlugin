@@ -16,7 +16,7 @@ public class Expression extends BaseOb implements Evaluatable {
 	}
 
 	public void test(IRI iri, String val) {
-		if(iri!=_iri)
+		if(iri!=_iri && _iri != null)
 			return;
 		boolean bothnums = true;
 		double val1 = 0, val2 = 0;

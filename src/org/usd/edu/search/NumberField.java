@@ -7,16 +7,13 @@ import javax.swing.text.AbstractDocument;
 
 public class NumberField extends JTextField {
 
-	public static final int DOCUMENT_ALLTEXT = 0;
-	public static final int DOCUMENT_NUMBERS = 1;
-	
 	public NumberField(String text) {
 		super(text);
-		setInputNormal(DOCUMENT_ALLTEXT);
+		setInputNormal(true);
 	}
 
-	public void setInputNormal(int type) {
-		if(type == DOCUMENT_ALLTEXT) {
+	public void setInputNormal(boolean isText) {
+		if(isText) {
 			String s = getText();
 			setDocument(new NormalDocument());
 			setText(s);
