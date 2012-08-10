@@ -1,8 +1,5 @@
 <?xml version = "1.0" encoding = "utf-8"?>
 
-<!-- 
-     *** CHANGE ME *** change the project name.
-  -->
 <project name = "Advanced Annotation Search" default = "install" basedir = ".">    
 
    <!-- 
@@ -22,24 +19,11 @@
    <property name="minor.version" value="0"/>
    <property name="micro.version" value="0"/>
 
-   <!-- 
-        **** CHANGE ME ****
+   <property name = "plugin"          value = "org.usd.edu.search"/>   <!--PLUGIN NAME-->
 
-        This setting defines the name of the plugin.
-        This may be the only setting that the developer needs to
-        change.
-     -->
-   <property name = "plugin"          value = "org.usd.edu.search"/>
-
-   
-   <!-- 
-        these properties probably don't need changing
-        -->
    <property name = "src"               location = "./src"/>  
    <property name = "build"             location = "./build"/>
    <property name = "classes"           location = "${build}/classes"/>
-   <property name = "lib"               location = "./lib"/>
-   <property name = "genlib"            location = "${build}/lib"/>
    <property name = "manifest"          location = "${build}/manifest.mf"/>
    <property name = "manifest.bundlor"  location = "./META-INF/manifest.bundlor"/>
 
@@ -47,32 +31,23 @@
    <property name = "protege.plugins"   location="${protege.home}/plugins"/>
    <property name = "run.config"        location="${protege.home}/config.xml"/>
 
-   <property name="equinox.common" 
-             location="${protege.common}/org.eclipse.equinox.common.jar"/>
-   <property name="equinox.registry"
-             location="${protege.common}/org.eclipse.equinox.registry.jar"/>
-   <property name="protege.lib" 
-             location="${protege.common}/org.protege.editor.core.application.jar"/>
-   <property name="common.lib"
-             location="${protege.common}/org.protege.common.jar"/>
-
-   <property name="owl.lib"
-             location="${protege.plugins}/org.semanticweb.owl.owlapi.jar"/>
-
-   <property name="owl.editor.jar"
-	     location="${protege.plugins}/org.protege.editor.owl.jar"/>
+   <property name="equinox.common" location="${protege.common}/org.eclipse.equinox.common.jar"/>
+   <property name="equinox.registry" location="${protege.common}/org.eclipse.equinox.registry.jar"/>
+   <property name="protege.lib" location="${protege.common}/org.protege.editor.core.application.jar"/>
+   <property name="common.lib" location="${protege.common}/org.protege.common.jar"/>
+   <property name="owl.lib" location="${protege.plugins}/org.semanticweb.owl.owlapi.jar"/>
+   <property name="owl.editor.jar" location="${protege.plugins}/org.protege.editor.owl.jar"/>
 
 
    <target name = "init">
      <tstamp>
-       <format property="build.time" pattern="yyyy_MM_dd_hhmm"/>
+	<format property="build.time" pattern="yyyy_MM_dd_hhmm"/>
      </tstamp>
      <property name="bundle.version"
                value="${major.version}.${minor.version}.${micro.version}.${build.time}"/>
      <mkdir dir = "${build}"/>
      <mkdir dir = "${classes}"/>
      <mkdir dir = "${classes}/lib"/>
-     <mkdir dir = "${genlib}"/>
      <condition property="use.bundlor">
        <and>
          <available file="${bundlor.home}"     type = "dir"/>
@@ -126,13 +101,6 @@
        <pathelement location="${equinox.registry}"/>
        <pathelement location="${owl.editor.jar}"/>
        <pathelement location="${owl.lib}"/>
-       <!-- 
-            **** CHANGE ME ****
-
-            Remove this line if you don't have a lib directory.
-            -->
-       <fileset dir="${lib}"/>
-       <fileset dir="${genlib}"/>
      </path>
    </target>
 
@@ -176,14 +144,7 @@
          <exclude name="**/manifest.mf"/>
        </fileset>
      </copy>
-     <!-- 
-          **** CHANGE ME ****
 
-          Remove the copy operation below if you don't have a lib directory.
-       -->
-     <copy todir="${classes}/lib">
-       <fileset dir="${lib}" excludes="junit*.jar"/>
-     </copy>
      <copy todir="${classes}">
        <fileset dir="." includes="*.xml">
            <exclude name="build.xml"/>
@@ -201,7 +162,7 @@
    </target>
 
    <target name="use.existing.manifest" depends="init" unless="use.bundlor">
-     <copy tofile="${manifest}" 
+     <copy tofile="${manifest}"
            file="META-INF/MANIFEST.MF" overwrite="true"/>
      <manifest file="${manifest}" 
                mode = "update">
@@ -259,111 +220,8 @@
         </java>
     </target>
 
-    <!-- ===================================================================  -->
-    <!-- DEBUG -->
-    <!-- ===================================================================  -->
-    <target name = "debug" depends="init">
-        <java fork = "true" dir = "${protege.home}" 
-              classname = "org.protege.osgi.framework.Launcher">
-            <jvmarg value = "-Dlog4j.configuration=file:log4j.xml"/>
-            <jvmarg value = "-agentlib:jdwp=transport=dt_socket,address=8500,server=y,suspend=y"/>
-            <jvmarg value = "-Xmx1500M"/>
-            <jvmarg value = "-Dorg.protege.launch.config=${run.config}"/>
-            <classpath>
-              <pathelement path="${protege.osgi}"/>
-              <pathelement path="${protege.launcher}"/>
-            </classpath>
-        </java>
-    </target>
-
 	
    <target name = "clean">
      <delete dir = "${build}"/>
    </target>
-
-
-   <target name = "usage">
-     <echo message = "To run this script set the PROTEGE_HOME environment"/>
-     <echo message = "variable and use one of the following targets"/>
-     <echo message = "jar - builds the jar (bundle) file for this project"/>
-     <echo message = "install - installs  the bundle into the Protege distribution"/>
-     <echo message = "copy.resources - copyies resources into the classes directory"/>
-     <echo message = "    this can  be useful for ide developers - see the wiki"/>
-     <echo message = "run - runs Protege (requires that Protege has been installed)"/>
-     <echo message = "debug - starts Protege with the debugger using port 8500"/>
-   </target>
-
-
-   <!-- ===================================================================  -->
-   <!-- Distribution Support - Optional                                      -->
-   <!-- ===================================================================  -->
-
-   <!-- 
-        **** CHANGE ME ****
-
-     This entire last section will probably only need to be setup relatively 
-     late in a project. It is optional and you can delete this section
-     if desired (you can always get it from the plugin template later
-     when you need it.)  It is designed to make it easier for
-     plugin developers to configure an update.properties file for use with the
-     Protege 4 automatic update feature.   Setting up the
-     update.properties file is a tedious process and I am trying to
-     make it simpler.  There will be a wiki for this process soon when
-     the new version of the Protege update mechanism is in place. 
-
-     This first property is the svn root of this project.  The idea is
-     allow the Protege update mechanism to find the update.properties
-     and version-readme.html in the ${svn.root}/etc directory of the
-     svn repository.  So all you need to do to make these files
-     available to the Protege update process is  to commit them.
-     However, feel free to choose other locations for these files if
-     it makes sense.
-     -->
-   <property name="svn.root" value="http://smi-protege.stanford.edu/repos/protege/protege4/plugins/org.coode.dlquery/trunk"/>
-
-
-   <property name="update.properties.file" value="${svn.root}/etc/update.properties"/>
-   <property name="readme.file"            value="${svn.root}/etc/version-readme.html"/>
-
-   <!--
-       **** CHANGE ME ****
-
-       This property contains the location you will use to download
-       your updated copy of the plugin jar file.
-       -->
-   <property name="download"               value="http://smi-protege.stanford.edu/protege4/plugins/4.1r/${plugin}.jar"/>
-
-
-   <!-- 
-        **** CHANGE ME ****
-
-        The name, license and author fields below will probably need
-        adjustment.
-        -->
-   <target name = "dist" depends="jar">
-       <echo file="./etc/update.properties" append="false">
-id=${plugin}
-version=${bundle.version}
-download=${download}
-name=DL Query Plugin
-readme=${readme.file}
-license=http://www.gnu.org/licenses/lgpl.html
-author=Matthew Horridge for the CO-ODE project
-       </echo>
-       <echo message="The build file should ensure that"/>
-       <echo message="1. The bundle version and id is correct."/>
-       <echo message="Check the following things"/>
-       <echo message="1. The main repository uses "/>
-       <echo message="      ${update.properties.file}"/>
-       <echo message="   to find this update"/>
-       <echo message="2. The update.properties can be found at "/>
-       <echo message="      ${update.properties.file}"/>
-       <echo message="   Usually this is ensured by committing your changed files."/>
-       <echo message="3. The readme file for this update can be found at"/>
-       <echo message="      ${readme.file}"/>
-       <echo message="   Usually this is ensured by committing your changed files."/>
-       <echo message="4. The download for this update can be found at"/>
-       <echo message="      ${download}"/>
-   </target>
-
 </project>

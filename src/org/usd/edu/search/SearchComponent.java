@@ -18,10 +18,12 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 
-public class SearchComponent extends AbstractOWLViewComponent {
+
+public class SearchComponent extends AbstractOWLViewComponent implements OWLOntologyChangeListener {
 	private static final long serialVersionUID = -4515710047558710080L;
 	private SearchTree _tree;
 	private TermAddDisplayer _disp1;
@@ -67,6 +69,10 @@ public class SearchComponent extends AbstractOWLViewComponent {
 
 			_tree.reset(); //make sure we don't reuse results from the last search
 		}
+	}
+	
+	public void ontologiesChanged(java.util.List<? extends org.semanticweb.owlapi.model.OWLOntologyChange> changelist) {
+		System.out.println("yeah");
 	}
 
 	@Override

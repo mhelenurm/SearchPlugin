@@ -3,8 +3,8 @@
 
 <plugin>
    <extension id="SearchComponent" point="org.protege.editor.core.application.ViewComponent">
-      <label value="Example View Component"/>
+      <label value="Advanced annotation search"/>
       <class value="org.usd.edu.search.SearchComponent"/>
-      <category value="@org.protege.ontologycategory"/>
+      <category value="@org.protege.misccategory"/>
    </extension>
 </plugin>

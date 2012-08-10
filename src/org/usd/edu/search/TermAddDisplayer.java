@@ -3,6 +3,7 @@ package org.usd.edu.search;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.ComponentListener;
 import java.awt.event.ComponentEvent;
@@ -26,12 +27,14 @@ public class TermAddDisplayer extends JPanel {
 	private JComboBox _iriComboBox;
 	private JComboBox _operatorComboBox;
 	private NumberField _textNumberField;
+	private OWLOntology _ont;
 			
 	public TermAddDisplayer(OWLOntology ont) {
+		_ont = ont;
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screensize = tk.getScreenSize();
 		
-		_iriComboBox = new JComboBox(getRenderedList(ont));
+		_iriComboBox = new JComboBox(getRenderedList());
 		_operatorComboBox = new JComboBox(Operator.toList());
 		_textNumberField = new NumberField("sample text");
 		
@@ -40,6 +43,17 @@ public class TermAddDisplayer extends JPanel {
 		add(_iriComboBox);
 		add(_operatorComboBox);
 		add(_textNumberField);
+
+		
+		_iriComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("go...");
+				Object o = _iriComboBox.getSelectedItem();
+				_iriComboBox.setModel(new DefaultComboBoxModel(getRenderedList()));
+				_iriComboBox.setSelectedItem(o);
+
+			}
+		});
 
 		addComponentListener(new ComponentListener() {
 			public void componentHidden(ComponentEvent e) {}
@@ -59,6 +73,7 @@ public class TermAddDisplayer extends JPanel {
 		_operatorComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				_textNumberField.setInputNormal(!((Operator)_operatorComboBox.getSelectedItem()).isNumberSpecific());
+				
 			}
 		});
 		_textNumberField.addMouseListener(new MouseListener() {
@@ -78,12 +93,12 @@ public class TermAddDisplayer extends JPanel {
 	/*
 	 This method gets a list of all the OWLAnnotationProperties to be displayed in a list. The list contains every annotation property used in the given ontology. This is a helper method for the display.
 	 */
-	private IRIWrapper[] getRenderedList(OWLOntology ontology) {
-		IRIWrapper[] renderedItems = new IRIWrapper[ontology.getAnnotationPropertiesInSignature().size()+1];
+	private IRIWrapper[] getRenderedList() {
+		IRIWrapper[] renderedItems = new IRIWrapper[_ont.getAnnotationPropertiesInSignature().size()+1];
 		int ct = 0;
 		renderedItems[0] = new IRIWrapper(null, null);
-		for(OWLAnnotationProperty prop : ontology.getAnnotationPropertiesInSignature()) {
-			renderedItems[++ct] = renderAnnotation(prop, ontology);
+		for(OWLAnnotationProperty prop : _ont.getAnnotationPropertiesInSignature()) {
+			renderedItems[++ct] = renderAnnotation(prop, _ont);
 		}
 		return renderedItems;
 	}
